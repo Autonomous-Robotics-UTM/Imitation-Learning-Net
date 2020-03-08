@@ -129,3 +129,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+net/classification/runs/Mar03_18-09-09_ali-XPS-15-9560/events.out.tfevents.1583276949.ali-XPS-15-9560
+net/classification/runs/Mar03_18-18-43_ali-XPS-15-9560/events.out.tfevents.1583277523.ali-XPS-15-9560
