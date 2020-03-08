@@ -4,7 +4,7 @@ The network takes in images and labels of manually driven vehicles and learns to
 
 ## Setup Process
 
-Navigate to /net and insert the [Dataset](https://drive.google.com/file/d/1acWm7MnHFfuF7rvhrm_kfzEZ9dyZ6hmL/view?usp=sharing) after unzipping it.
+Navigate to /net and create a directory called /data. Insert the [Dataset](https://drive.google.com/file/d/1acWm7MnHFfuF7rvhrm_kfzEZ9dyZ6hmL/view?usp=sharing) after unzipping it.
 
 Run Trainer.ipynb to train the neural network.
 Saved model versions will be saved in the snapshots folder
