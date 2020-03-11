@@ -141,9 +141,14 @@ class ControlsDataset(Dataset):
     def __getitem__(self, idx):
         # get a stack of images
         image_stack = self.images.get_stack(idx, self.stack_size)
+
         # use the latest image as the control
-        label = self.labels[idx + self.stack_size]
+        # label = self.labels[idx + self.stack_size]
+        # label = np.array([label])
+        label = self.labels.dataframe['Category'][idx + self.stack_size]
         label = np.array([label])
+
+
         # combine stack and label together
         sample = {'image': image_stack,
                   'control': label}
@@ -163,6 +168,8 @@ if __name__ == "__main__":
     print('Column Labels', list(dataset.labels.dataframe.columns))
     print('Total Labels', dataset.labels.__len__())
     print("Getting Single Image")
+
+    print("Categoried Data", dataset.labels.dataframe)
 
 
     # dataset.images.showSingleImage()

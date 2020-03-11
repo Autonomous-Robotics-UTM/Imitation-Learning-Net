@@ -49,7 +49,7 @@ class ImageTransform:
 
     def lineHighlight(self, image):
         gImage = self.grayscale(image)
-        print(gImage.shape)
+        # print(gImage.shape)
         withOutChannel = gImage[0, :, :]
         lineImage = feature.canny(withOutChannel)
         gImage[0, :, :] = lineImage

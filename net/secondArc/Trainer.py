@@ -33,23 +33,27 @@ def trainClassification(categories=14, canny=False):
 
     dataset = ControlsDataset()
     dataset.images.transform.add("resize")
+    inputChannels = 3
     if canny:
         dataset.images.transform.add("lineHighlight")
 
+    if dataset.images.grayscale or canny:
+        inputChannels = 1
+
     dataset.labels.num_categories = categories
     dataset.labels.transform.categorize(1.05, -1.05, categories)
-    # pd.set_option('display.max_rows', None)
 
-    print(dataset.labels.dataframe)
-    exit(1)
     dataset.make_dataloaders()
 
-    net = ClassConvNet(color_channels=3, outputs=categories, dataset=dataset).to(device)
+    net = ClassConvNet(color_channels=inputChannels, outputs=categories, dataset=dataset).to(device)
     # net = ConvNet(color_channels = 1, outputs = 21, dataset = dataset).to(device)
     print("number of parameters: ", sum(p.numel() for p in net.parameters()))
 
+    # print("Labels", dataset.labels.dataframe['Category'])
+    # exit(1)
+
     epoch = 30
-    optimizer = optim.Adam(net.parameters(), lr=0.001)
+    optimizer = optim.Adam(net.parameters(), lr=0.0001)
     criterion = nn.CrossEntropyLoss()
     net.report_period = 20
     net.optimizer = optimizer
@@ -79,4 +83,5 @@ def trainRegression(canny=False):
 
 
 # trainRegression()
-trainClassification()
+# trainClassification()
+trainClassification(canny=True)
