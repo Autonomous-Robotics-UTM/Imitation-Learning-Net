@@ -158,6 +158,8 @@ class ControlsDataset(Dataset):
         return len(self.labels) - self.stack_size
 
 
+
+
 if __name__ == "__main__":
     print("Preforming tests")
     stack_size = 1
@@ -172,7 +174,7 @@ if __name__ == "__main__":
     print("Categoried Data", dataset.labels.dataframe)
 
 
-    # dataset.images.showSingleImage()
+    dataset.images.showSingleImage()
 
     # io.set_title("Original Image. (NO TRANSFORMATION")
 
