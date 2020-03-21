@@ -110,7 +110,7 @@ class Labels:
 # Main Class used when data is required
 class ControlsDataset(Dataset):
     """Dataset that maps camera images into steering angle"""
-    def __init__(self, stack_size=1, img_folder='../data/selected/', csv_path='../data/selected/data.csv'):
+    def __init__(self, stack_size=1, img_folder='../data/cropped_reduced/', csv_path='../data/cropped_reduced/data.csv'):
         self.stack_size = stack_size
         self.images = Images(img_folder)
         self.labels = Labels(csv_path)
@@ -128,10 +128,10 @@ class ControlsDataset(Dataset):
         valid_sampler = SubsetRandomSampler(val_indices)
 
         # Training data loader # NOTE had to remove shuffle
-        self.dataloader = DataLoader(self, batch_size=128, num_workers=0, sampler=train_sampler)
+        self.dataloader = DataLoader(self, batch_size=16, num_workers=0, sampler=train_sampler)
 
         # Validation data loader # NOTE had to remove shuffle
-        self.validloader = DataLoader(self, batch_size=128, num_workers=0, sampler=valid_sampler)
+        self.validloader = DataLoader(self, batch_size=16, num_workers=0, sampler=valid_sampler)
 
         print("Total training stacks", len(self.dataloader))
         print("Total validation stacks", len(self.validloader))

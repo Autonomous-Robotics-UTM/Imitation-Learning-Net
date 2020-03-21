@@ -14,13 +14,12 @@ def manipulate(path,modified_path,func,num=0):
     global count
     global num_lines
     for filename in sorted(os.listdir(path)):
-        if filename.endswith("jpg"):
-            img = cv2.imread(path + filename, cv2.IMREAD_UNCHANGED)
+        if not filename.endswith("csv"):
+            filename = filename[:-4]
+            img = read(path + filename)
             img,img_path = func(img,modified_path,filename)
             if img_path != None:
-                cv2.imwrite(img_path,img)
-            
-
+                save(img_path,img)
         if num != 0 and count == num:
             break
         count += 1
@@ -32,6 +31,8 @@ def name(index):
     return name
 
 def copy(image,modified_path,filename):
+    line = old_labels.readline()
+    new_labels.write(line)
     return image,modified_path+filename
 
 def begin_writing():
@@ -91,9 +92,8 @@ def select(image,modified_path,filename):
 
 def reflect(image,modified_path,filename):
     offset = num_lines-1
-    index = (int(filename[:-4])+offset)
-    filename = name(index)+".jpg"
-    image = cv2.flip( image, 1)
+    filename = name(int(filename)+offset)
+    image = cv2.flip(image,1)
     line = old_labels.readline()
     count,label = line.split(",")
     if float(label) == 0:
@@ -111,19 +111,41 @@ def resize(image,modified_path,filename):
     new_labels.write(line)
     return image,modified_path+filename
 
+def xysv(image,modified_path,filename):
+    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+    H = image[:,:,0]/float(255)*(2*np.pi)
+    SV = 2*(image[:,:,1:]/float(255))-1
+    X = np.sin(H)
+    Y = np.cos(H)
+
+    X = np.expand_dims(X, axis=2)
+    Y = np.expand_dims(Y, axis=2)
+    XYSV = np.dstack((X,Y,SV))
+    line = old_labels.readline()
+    new_labels.write(line)
+    return XYSV,modified_path+filename
+
+def read(path):
+    img = cv2.imread(path+".jpg",cv2.IMREAD_UNCHANGED)
+    #img = np.load(path+".npy")
+    return img
+
+def save(path,image):
+    #cv2.imwrite(path+".jpg",image)
+    np.save(path, image)
+
 
 data_path = os.path.abspath(os.getcwd())+"/data/cropped_vflip/"
-new_path = os.path.abspath(os.getcwd())+"/data/cropped_reduced/"
+new_path = os.path.abspath(os.getcwd())+"/data/xysv/"
 try:
     os.mkdir(new_path)
 except OSError:
-    print ("Creation of the directory %s failed" % new_path)
+    print ("Directory %s already exists" % new_path)
 
-#num_lines = sum(1 for line in open(data_path+"data.csv", "r"))
+num_lines = sum(1 for line in open(data_path+"data.csv", "r"))
 
 begin_writing()
-manipulate(data_path,new_path,resize)
-#finish_writing()
+manipulate(data_path,new_path,xysv)
 #continue_writing()
 #manipulate(data_path,new_path,reflect)
-#finish_writing()
+finish_writing()

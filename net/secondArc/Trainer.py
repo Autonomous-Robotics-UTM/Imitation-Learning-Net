@@ -230,9 +230,9 @@ def trainRegression(canny=False):
 
 # TODO Train each of these models on Epoch 50
 # Models To Train
-trainClassification()
-# trainClassification(canny=True)
-# trainClassification(grayScale=True)
+#trainClassification()
+#trainClassification(canny=True)
+trainClassification(grayScale=True)
 #
 # trainClassification2()
 # trainClassification2(canny=True)

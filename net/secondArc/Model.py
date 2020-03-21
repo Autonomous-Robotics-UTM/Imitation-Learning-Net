@@ -57,7 +57,7 @@ class ConvNet(nn.Module):
         )
 
     def forward(self, input):
-        input = input.view(input.size(0), 3, 70, 320)
+        # input = input.view(input.size(0), 3, 70, 320)
         input = self.convLayers(input)
         print(input.shape)
 
@@ -158,8 +158,9 @@ class ClassConvNet(nn.Module):
         )
 
     def forward(self, input):
-        input = input.view(input.size(0), self.channels, 70, 320)
+        input = input.view(input.size(0), self.channels, 100, 200)
         input = self.convLayers(input)
+        print("inputShape", input.shape)
         input = input.view(input.size(0), -1)
         output = self.FC(input)
         return output
