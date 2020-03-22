@@ -19,3 +19,6 @@ In order to see the update in the loss you can view the results on Tensorboard b
 
 # Important
 While we don't have gitignore set up, don't push commits with the dataset in the file structure, there's no point of having the dataset backed up on github.
+
+# Online Report
+[google doc](https://drive.google.com/drive/folders/1LK9MIhBG0G2vXhcsIcVYs7jsulb1ul9L?usp=sharing)
