@@ -22,3 +22,5 @@ While we don't have gitignore set up, don't push commits with the dataset in the
 
 # Online Report
 [Latex doc](https://www.overleaf.com/read/fhwvtxtsmsgh)
+
+![PDF](https://github.com/Autonomous-Robotics-UTM/Imitation-Learning-Net/raw/master/Autonomous%20Driving%20Through%20Imitation%20Learning.pdf)
